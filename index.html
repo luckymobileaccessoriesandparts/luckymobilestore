@@ -2,148 +2,311 @@
 <html lang="hi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>LUCKY MOBILE ACCESSORIES & PARTS</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lucky Mobile Accessories & Parts</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial;background:#f3f5f8;color:#17243a}
-header{background:#081a35;color:white;padding:24px 15px}
-.wrap{max-width:1100px;margin:auto}
-.brand{font-size:clamp(22px,4vw,34px);font-weight:bold;color:#e8b84b}
-.tag{margin-top:8px}
-#search{width:100%;padding:13px;margin-top:18px;border:0;border-radius:8px;font-size:16px}
-main{max-width:1100px;margin:22px auto;padding:0 14px}
-#categories{display:flex;gap:8px;overflow:auto;padding-bottom:15px}
-.cat{white-space:nowrap;padding:10px 15px;border:1px solid #ddd;border-radius:25px;background:white}
-.cat.active{background:#081a35;color:#e8b84b}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px}
-.card{background:white;border-radius:12px;overflow:hidden;box-shadow:0 3px 12px #0001}
-.photo{height:150px;background:#e9edf3;display:grid;place-items:center;color:#777}
-.photo img{width:100%;height:100%;object-fit:contain}
-.info{padding:12px}
-.name{font-weight:bold;min-height:35px}
-.price{color:#a8750d;font-weight:bold;margin:10px 0}
-.order{display:block;text-align:center;background:#138b55;color:white;padding:10px;border-radius:7px;text-decoration:none}
-footer{background:#081a35;color:white;text-align:center;padding:25px;margin-top:35px}
+body{margin:0;font-family:Arial;background:#f4f6fa;color:#222}
+header{background:#101d36;color:white;text-align:center;padding:25px 12px}
+header h1{margin:0;font-size:25px}
+nav{background:#172b4d;padding:13px;text-align:center}
+nav a{color:white;text-decoration:none;margin:10px}
+.container{max-width:1100px;margin:auto;padding:16px}
+.hero{background:linear-gradient(120deg,#102344,#1764a5);color:white;text-align:center;padding:30px;border-radius:14px}
+.search{width:100%;padding:14px;margin:18px 0;border:1px solid #ccc;border-radius:8px}
+.categories{display:flex;gap:8px;overflow:auto;margin-bottom:18px}
+.categories button{padding:10px 15px;border:0;border-radius:20px;white-space:nowrap}
+.categories button.active{background:#173e75;color:white}
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:14px}
+.product,.panel{background:white;padding:12px;border-radius:12px;box-shadow:0 2px 10px #0001}
+.product img{width:100%;height:145px;object-fit:contain}
+.product h3{font-size:16px}
+.price{font-size:20px;font-weight:bold;color:green}
+.order{display:block;background:#138b48;color:white;text-align:center;padding:11px;text-decoration:none;border-radius:7px}
+footer{background:#101d36;color:white;text-align:center;padding:22px;margin-top:30px}
+.admin-btn{position:fixed;bottom:15px;right:15px;background:#172b4d;color:white;border:0;padding:14px 18px;border-radius:30px;z-index:10}
+.panel{margin:15px 0;padding:18px}
+.panel input:not([type=checkbox]){width:100%;padding:12px;margin:7px 0 12px;border:1px solid #ccc;border-radius:7px}
+.action{padding:11px 15px;background:#173e75;color:white;border:0;border-radius:7px;margin:4px}
+.green{background:#138b48}.danger{background:#c62828}
+.hidden{display:none!important}
+.admin-item{display:flex;align-items:center;gap:8px;border-bottom:1px solid #ddd;padding:10px 0}
+.admin-item img{width:55px;height:55px;object-fit:contain}
+.admin-item div{flex:1;min-width:0}
+@media(max-width:500px){
+header h1{font-size:21px}
+.products{grid-template-columns:repeat(2,minmax(0,1fr))}
+.admin-item{flex-wrap:wrap}
+}
 </style>
 </head>
 <body>
 <header>
-<div class="wrap">
-<div class="brand">LUCKY MOBILE ACCESSORIES & PARTS</div>
-<div class="tag">भरोसे का दूसरा नाम | Wholesale & Retail</div>
-<input id="search" placeholder="प्रोडक्ट खोजें...">
-</div>
+<h1>Lucky Mobile Accessories & Parts</h1>
+<p>आपका भरोसा ही हमारी पहचान ❤️</p>
 </header>
-<main>
-<div id="categories"></div>
-<h2 id="heading">सभी प्रोडक्ट</h2>
-<div class="grid" id="products"></div>
-<p id="empty" style="text-align:center"></p>
+<nav>
+<a href="#home">Home</a>
+<a href="#products">Products</a>
+<a href="#contact">Contact</a>
+</nav>
+<main class="container" id="home">
+<section class="hero">
+<h2>Mobile Accessories & Parts</h2>
+<p>सभी प्रकार के मोबाइल पार्ट्स और एक्सेसरीज़ उपलब्ध हैं।</p>
+<p>मोबाइल रिपेयरिंग की सुविधा भी उपलब्ध है।</p>
+</section>
+<input class="search" id="search" placeholder="प्रोडक्ट खोजें...">
+<div class="categories" id="categories"></div>
+<h2 id="products">हमारे प्रोडक्ट</h2>
+<div class="products" id="productList">प्रोडक्ट लोड हो रहे हैं...</div>
 </main>
+<section class="container" id="contact">
+<div class="panel">
+<h2>हमसे संपर्क करें</h2>
+<p>Lucky Mobile Accessories & Parts</p>
+<p>Badsha Market, Mandi Kotla, Chandpur, Bijnor</p>
+<p>WhatsApp: 8384868986</p>
+<a class="order" href="https://wa.me/918384868986">WhatsApp पर संपर्क करें</a>
+</div>
+</section>
 <footer>
-<b>LUCKY MOBILE ACCESSORIES & PARTS</b><br><br>
-Badsha Market, Mandi Kotla, Chandpur, Bijnor, Uttar Pradesh<br>
-WhatsApp: 8384868968<br><br>
-<a style="color:#e8b84b" href="https://wa.me/918384868968">WhatsApp पर संपर्क करें</a>
+<p>© 2026 Lucky Mobile Accessories & Parts</p>
+<p>Chandpur, Bijnor</p>
 </footer>
-<script type="module">
-import {initializeApp} from
-"https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
-import {getFirestore,collection,onSnapshot} from
-"https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+<button class="admin-btn" onclick="showAdmin()">Admin Login</button>
+<section class="container hidden" id="adminArea">
+<div class="panel">
+<h2>Admin Panel</h2>
+<div id="loginBox">
+<p>Admin Gmail और Password डालें</p>
+<input id="email" type="email" placeholder="Admin Gmail">
+<input id="password" type="password" placeholder="Password">
+<button class="action green" id="loginBtn">Login</button>
+</div>
+<div id="manageBox" class="hidden">
+<p id="adminWelcome"></p>
+<button class="action danger" id="logoutBtn">Logout</button>
+<hr>
+<h3>प्रोडक्ट जोड़ें / बदलें</h3>
+<input id="productName" placeholder="प्रोडक्ट का नाम">
+<input id="productPrice" type="number" min="0" placeholder="कीमत ₹">
+<input id="productCategory" list="categoryOptions" placeholder="Category">
+<datalist id="categoryOptions">
+<option value="Charger">
+<option value="Data Cable">
+<option value="Earphone">
+<option value="Neckband">
+<option value="Airbuds">
+<option value="Tempered Glass">
+<option value="Mobile Parts">
+<option value="Mobile Cover">
+<option value="Gadgets">
+<option value="Machines & Tools">
+</datalist>
+<label>प्रोडक्ट फोटो चुनें</label>
+<input id="productImage" type="file" accept="image/*">
+<label><input id="productActive" type="checkbox" checked> वेबसाइट पर दिखाएँ</label>
+<button class="action green" id="saveBtn">Save Product</button>
+<button class="action" id="clearBtn">नया प्रोडक्ट</button>
+<p id="message"></p>
+<hr>
+<h3>सभी प्रोडक्ट</h3>
+<div id="adminProducts"></div>
+</div>
+</div>
+</section>
 
-/* Firebase की अपनी जानकारी यहाँ डालनी होगी */
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import {getAuth,signInWithEmailAndPassword,signOut,onAuthStateChanged} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import {getFirestore,collection,addDoc,updateDoc,deleteDoc,doc,onSnapshot,serverTimestamp} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+import {getStorage,ref,uploadBytes,getDownloadURL,deleteObject} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-storage.js";
+
 const firebaseConfig={
- apiKey:"PASTE_API_KEY",
- authDomain:"PASTE_PROJECT_ID.firebaseapp.com",
- projectId:"PASTE_PROJECT_ID",
- storageBucket:"PASTE_PROJECT_ID.appspot.com",
- messagingSenderId:"PASTE_MESSAGING_SENDER_ID",
- appId:"PASTE_APP_ID"
+apiKey:"AIzaSyBPeVQOZzl5T83cqbR1tG11lZwKx0IcYe4",
+authDomain:"luckymobilestor-d6e48.firebaseapp.com",
+projectId:"luckymobilestor-d6e48",
+storageBucket:"luckymobilestor-d6e48.firebasestorage.app",
+messagingSenderId:"498376944449",
+appId:"1:498376944449:web:586022cb0a66ac5ee4cfc0",
+measurementId:"G-JKX65G603J"
 };
 
-const defaultCategories=[
-"Charger","Data Cable","Earphone","Neckband","Airbuds",
-"Tempered Glass","Mobile Parts","Mobile Cover","Watches",
-"Gadgets","Machines & Tools"
-];
+const ADMIN_EMAIL="Aijazali431@gmail.com";
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const db=getFirestore(app);
+const storage=getStorage(app);
+const $=id=>document.getElementById(id);
+const productCollection=collection(db,"products");
 
-let categories=defaultCategories.map(name=>({name}));
 let products=[];
-let active="all";
+let selectedCategory="सभी";
+let editingId=null;
+let editingImagePath=null;
+let currentUser=null;
 
-const catBox=document.getElementById("categories");
-const productBox=document.getElementById("products");
+window.showAdmin=()=>{
+$("adminArea").classList.toggle("hidden");
+$("adminArea").scrollIntoView({behavior:"smooth"});
+};
 
-function safe(s){
- return String(s??"").replace(/[&<>"']/g,c=>({
- "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
- }[c]));
+function message(m){$("message").textContent=m;}
+
+const defaultCategories=["सभी","Charger","Data Cable","Earphone","Neckband","Airbuds","Tempered Glass","Mobile Parts","Mobile Cover","Gadgets","Machines & Tools"];
+
+function renderCategories(){
+const names=[...new Set([...defaultCategories,...products.map(p=>p.category).filter(Boolean)])];
+$("categories").innerHTML="";
+names.forEach(name=>{
+const b=document.createElement("button");
+b.textContent=name;
+b.className=selectedCategory===name?"active":"";
+b.onclick=()=>{selectedCategory=name;renderCategories();renderProducts();};
+$("categories").appendChild(b);
+});
 }
 
-function drawCategories(){
- catBox.innerHTML=[
- `<button class="cat ${active==="all"?"active":""}" data-cat="all">सभी</button>`,
- ...categories.map(c=>`<button class="cat ${active===c.name?"active":""}" data-cat="${safe(c.name)}">${safe(c.name)}</button>`)
- ].join("");
-
- catBox.querySelectorAll("button").forEach(b=>{
-  b.onclick=()=>{
-   active=b.dataset.cat;
-   document.getElementById("heading").textContent=
-    active==="all"?"सभी प्रोडक्ट":active;
-   drawCategories();
-   drawProducts();
-  };
- });
+function renderProducts(){
+const q=$("search").value.toLowerCase().trim();
+const list=products.filter(p=>(selectedCategory==="सभी"||p.category===selectedCategory)&&(p.name||"").toLowerCase().includes(q)&&p.active!==false);
+$("productList").innerHTML="";
+if(!list.length){$("productList").textContent="अभी कोई प्रोडक्ट उपलब्ध नहीं है।";return;}
+list.forEach(p=>{
+const card=document.createElement("div");
+card.className="product";
+const img=document.createElement("img");img.src=p.imageUrl||"";img.alt=p.name||"Product";
+const title=document.createElement("h3");title.textContent=p.name||"";
+const cat=document.createElement("small");cat.textContent=p.category||"";
+const price=document.createElement("div");price.className="price";price.textContent="₹"+(p.price??"");
+const order=document.createElement("a");
+order.className="order";
+order.href="https://wa.me/918384868986?text="+encodeURIComponent("नमस्ते, मुझे "+p.name+" के बारे में जानकारी चाहिए।");
+order.target="_blank";order.rel="noopener";order.textContent="WhatsApp Order";
+card.append(img,title,cat,price,order);
+$("productList").appendChild(card);
+});
 }
 
-function drawProducts(){
- const q=document.getElementById("search").value.toLowerCase();
- const list=products.filter(p=>
-  (active==="all"||p.category===active)&&
-  ((p.name||"")+" "+(p.category||"")).toLowerCase().includes(q)
- );
-
- productBox.innerHTML=list.map(p=>`
- <div class="card">
-  <div class="photo">
-   ${p.imageUrl?`<img src="${safe(p.imageUrl)}" alt="${safe(p.name)}">`:"फोटो उपलब्ध नहीं"}
-  </div>
-  <div class="info">
-   <div class="name">${safe(p.name)}</div>
-   <div>${safe(p.category)}</div>
-   <div class="price">${p.price?"₹"+safe(p.price):"रेट के लिए संपर्क करें"}</div>
-   <a class="order" target="_blank"
-    href="https://wa.me/918384868968?text=${encodeURIComponent("मुझे "+p.name+" चाहिए।")}">
-    WhatsApp Order
-   </a>
-  </div>
- </div>`).join("");
-
- document.getElementById("empty").textContent=
-  list.length?"":"अभी कोई प्रोडक्ट उपलब्ध नहीं है।";
+function renderAdminProducts(){
+$("adminProducts").innerHTML="";
+if(!products.length){$("adminProducts").textContent="अभी कोई प्रोडक्ट नहीं है।";return;}
+products.forEach(p=>{
+const row=document.createElement("div");row.className="admin-item";
+const img=document.createElement("img");img.src=p.imageUrl||"";
+const info=document.createElement("div");
+const name=document.createElement("b");name.textContent=p.name||"";
+const price=document.createElement("p");price.textContent="₹"+p.price+" | "+(p.category||"");
+info.append(name,price);
+const edit=document.createElement("button");edit.className="action";edit.textContent="Edit";edit.onclick=()=>editProduct(p);
+const del=document.createElement("button");del.className="action danger";del.textContent="Delete";del.onclick=()=>removeProduct(p);
+row.append(img,info,edit,del);$("adminProducts").appendChild(row);
+});
 }
 
-document.getElementById("search").addEventListener("input",drawProducts);
-drawCategories();
-drawProducts();
-
-if(!firebaseConfig.apiKey.startsWith("PASTE_")){
- const app=initializeApp(firebaseConfig);
- const db=getFirestore(app);
-
- onSnapshot(collection(db,"categories"),s=>{
-  categories=s.docs.map(d=>({id:d.id,...d.data()}));
-  drawCategories();
- });
-
- onSnapshot(collection(db,"products"),s=>{
-  products=s.docs.map(d=>d.data()).filter(p=>p.active!==false);
-  drawProducts();
- });
+function clearForm(){
+editingId=null;editingImagePath=null;
+$("productName").value="";$("productPrice").value="";
+$("productCategory").value="";$("productImage").value="";
+$("productActive").checked=true;$("saveBtn").textContent="Save Product";message("");
 }
+$("clearBtn").onclick=clearForm;
+
+function editProduct(p){
+editingId=p.id;editingImagePath=p.imagePath||null;
+$("productName").value=p.name||"";
+$("productPrice").value=p.price??"";
+$("productCategory").value=p.category||"";
+$("productImage").value="";
+$("productActive").checked=p.active!==false;
+$("saveBtn").textContent="Update Product";
+message("बदलाव करके Update Product दबाएँ।");
+$("adminArea").scrollIntoView({behavior:"smooth"});
+}
+
+async function saveProduct(){
+if(!currentUser){message("पहले Admin Login करें।");return;}
+const name=$("productName").value.trim();
+const price=Number($("productPrice").value);
+const category=$("productCategory").value.trim();
+const file=$("productImage").files[0];
+const active=$("productActive").checked;
+if(!name||!category||$("productPrice").value===""||!Number.isFinite(price)||price<0){message("नाम, कीमत और Category भरें।");return;}
+$("saveBtn").disabled=true;message("सेव हो रहा है...");
+try{
+let imageUrl=editingId?(products.find(p=>p.id===editingId)?.imageUrl||""):"";
+let imagePath=editingImagePath;
+if(file){
+if(!file.type.startsWith("image/"))throw new Error("सिर्फ फोटो चुनें।");
+if(file.size>5*1024*1024)throw new Error("फोटो 5 MB से छोटी रखें।");
+const safeName=file.name.replace(/[^a-zA-Z0-9._-]/g,"_");
+const newPath="products/"+Date.now()+"_"+safeName;
+const imageRef=ref(storage,newPath);
+await uploadBytes(imageRef,file);
+imageUrl=await getDownloadURL(imageRef);
+if(imagePath){try{await deleteObject(ref(storage,imagePath));}catch(e){console.warn(e);}}
+imagePath=newPath;
+}
+const data={name,price,category,imageUrl,imagePath,active,updatedAt:serverTimestamp()};
+if(editingId){
+await updateDoc(doc(db,"products",editingId),data);
+}else{
+await addDoc(productCollection,{...data,createdAt:serverTimestamp()});
+}
+clearForm();message("प्रोडक्ट सफलतापूर्वक सेव हो गया।");
+}catch(e){console.error(e);message("Error: "+e.message);}
+finally{$("saveBtn").disabled=false;}
+}
+$("saveBtn").onclick=saveProduct;
+
+async function removeProduct(p){
+if(!currentUser)return;
+if(!confirm("क्या आप यह प्रोडक्ट डिलीट करना चाहते हैं?"))return;
+try{
+await deleteDoc(doc(db,"products",p.id));
+if(p.imagePath){try{await deleteObject(ref(storage,p.imagePath));}catch(e){console.warn(e);}}
+message("प्रोडक्ट डिलीट हो गया।");
+}catch(e){message("Delete Error: "+e.message);}
+}
+
+$("loginBtn").onclick=async()=>{
+const email=$("email").value.trim();
+const password=$("password").value;
+if(email.toLowerCase()!==ADMIN_EMAIL.toLowerCase()){message("Admin Gmail सही नहीं है।");return;}
+if(!email||!password){message("Gmail और Password भरें।");return;}
+try{
+await signInWithEmailAndPassword(auth,email,password);
+$("password").value="";
+}catch(e){message("Login Error: "+e.message);}
+};
+
+$("logoutBtn").onclick=()=>signOut(auth);
+
+onAuthStateChanged(auth,user=>{
+currentUser=user;
+if(user&&user.email?.toLowerCase()===ADMIN_EMAIL.toLowerCase()){
+$("loginBox").classList.add("hidden");
+$("manageBox").classList.remove("hidden");
+$("adminWelcome").textContent="Login: "+user.email;
+renderAdminProducts();
+}else{
+if(user)signOut(auth);
+$("loginBox").classList.remove("hidden");
+$("manageBox").classList.add("hidden");
+}
+});
+
+$("search").addEventListener("input",renderProducts);
+
+onSnapshot(productCollection,snapshot=>{
+products=snapshot.docs.map(d=>({id:d.id,...d.data()}));
+renderCategories();renderProducts();
+if(currentUser)renderAdminProducts();
+},error=>{
+console.error(error);
+$("productList").textContent="प्रोडक्ट लोड नहीं हुए: "+error.message;
+});
 </script>
 </body>
 </html>
