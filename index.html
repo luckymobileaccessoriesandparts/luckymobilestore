@@ -1,76 +1,149 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lucky Mobile Accessories and Parts</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            background: #f4f4f4;
-            text-align: center;
-        }
-
-        header {
-            background: #111827;
-            color: white;
-            padding: 30px 10px;
-        }
-
-        h1 {
-            margin: 0;
-            font-size: 28px;
-        }
-
-        .tagline {
-            color: #facc15;
-            font-size: 18px;
-        }
-
-        .container {
-            padding: 30px 15px;
-        }
-
-        .box {
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            max-width: 600px;
-            margin: auto;
-        }
-
-        .whatsapp {
-            display: inline-block;
-            background: #25D366;
-            color: white;
-            padding: 12px 25px;
-            text-decoration: none;
-            border-radius: 6px;
-            margin-top: 15px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LUCKY MOBILE ACCESSORIES & PARTS</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial;background:#f3f5f8;color:#17243a}
+header{background:#081a35;color:white;padding:24px 15px}
+.wrap{max-width:1100px;margin:auto}
+.brand{font-size:clamp(22px,4vw,34px);font-weight:bold;color:#e8b84b}
+.tag{margin-top:8px}
+#search{width:100%;padding:13px;margin-top:18px;border:0;border-radius:8px;font-size:16px}
+main{max-width:1100px;margin:22px auto;padding:0 14px}
+#categories{display:flex;gap:8px;overflow:auto;padding-bottom:15px}
+.cat{white-space:nowrap;padding:10px 15px;border:1px solid #ddd;border-radius:25px;background:white}
+.cat.active{background:#081a35;color:#e8b84b}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px}
+.card{background:white;border-radius:12px;overflow:hidden;box-shadow:0 3px 12px #0001}
+.photo{height:150px;background:#e9edf3;display:grid;place-items:center;color:#777}
+.photo img{width:100%;height:100%;object-fit:contain}
+.info{padding:12px}
+.name{font-weight:bold;min-height:35px}
+.price{color:#a8750d;font-weight:bold;margin:10px 0}
+.order{display:block;text-align:center;background:#138b55;color:white;padding:10px;border-radius:7px;text-decoration:none}
+footer{background:#081a35;color:white;text-align:center;padding:25px;margin-top:35px}
+</style>
 </head>
-
 <body>
+<header>
+<div class="wrap">
+<div class="brand">LUCKY MOBILE ACCESSORIES & PARTS</div>
+<div class="tag">भरोसे का दूसरा नाम | Wholesale & Retail</div>
+<input id="search" placeholder="प्रोडक्ट खोजें...">
+</div>
+</header>
+<main>
+<div id="categories"></div>
+<h2 id="heading">सभी प्रोडक्ट</h2>
+<div class="grid" id="products"></div>
+<p id="empty" style="text-align:center"></p>
+</main>
+<footer>
+<b>LUCKY MOBILE ACCESSORIES & PARTS</b><br><br>
+Badsha Market, Mandi Kotla, Chandpur, Bijnor, Uttar Pradesh<br>
+WhatsApp: 8384868968<br><br>
+<a style="color:#e8b84b" href="https://wa.me/918384868968">WhatsApp पर संपर्क करें</a>
+</footer>
+<script type="module">
+import {initializeApp} from
+"https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import {getFirestore,collection,onSnapshot} from
+"https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
-    <header>
-        <h1>Lucky Mobile Accessories & Parts</h1>
-        <p class="tagline">भरोसे का दूसरा नाम</p>
-    </header>
+/* Firebase की अपनी जानकारी यहाँ डालनी होगी */
+const firebaseConfig={
+ apiKey:"PASTE_API_KEY",
+ authDomain:"PASTE_PROJECT_ID.firebaseapp.com",
+ projectId:"PASTE_PROJECT_ID",
+ storageBucket:"PASTE_PROJECT_ID.appspot.com",
+ messagingSenderId:"PASTE_MESSAGING_SENDER_ID",
+ appId:"PASTE_APP_ID"
+};
 
-    <div class="container">
-        <div class="box">
-            <h2>Welcome to Lucky Mobile</h2>
-            <p>All your mobile accessories needs.</p>
-            <p>Quality Products at Best Wholesale Prices.</p>
+const defaultCategories=[
+"Charger","Data Cable","Earphone","Neckband","Airbuds",
+"Tempered Glass","Mobile Parts","Mobile Cover","Watches",
+"Gadgets","Machines & Tools"
+];
 
-            <a class="whatsapp"
-               href="https://wa.me/91YOURNUMBER">
-               Order on WhatsApp
-            </a>
-        </div>
-    </div>
+let categories=defaultCategories.map(name=>({name}));
+let products=[];
+let active="all";
 
+const catBox=document.getElementById("categories");
+const productBox=document.getElementById("products");
+
+function safe(s){
+ return String(s??"").replace(/[&<>"']/g,c=>({
+ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+ }[c]));
+}
+
+function drawCategories(){
+ catBox.innerHTML=[
+ `<button class="cat ${active==="all"?"active":""}" data-cat="all">सभी</button>`,
+ ...categories.map(c=>`<button class="cat ${active===c.name?"active":""}" data-cat="${safe(c.name)}">${safe(c.name)}</button>`)
+ ].join("");
+
+ catBox.querySelectorAll("button").forEach(b=>{
+  b.onclick=()=>{
+   active=b.dataset.cat;
+   document.getElementById("heading").textContent=
+    active==="all"?"सभी प्रोडक्ट":active;
+   drawCategories();
+   drawProducts();
+  };
+ });
+}
+
+function drawProducts(){
+ const q=document.getElementById("search").value.toLowerCase();
+ const list=products.filter(p=>
+  (active==="all"||p.category===active)&&
+  ((p.name||"")+" "+(p.category||"")).toLowerCase().includes(q)
+ );
+
+ productBox.innerHTML=list.map(p=>`
+ <div class="card">
+  <div class="photo">
+   ${p.imageUrl?`<img src="${safe(p.imageUrl)}" alt="${safe(p.name)}">`:"फोटो उपलब्ध नहीं"}
+  </div>
+  <div class="info">
+   <div class="name">${safe(p.name)}</div>
+   <div>${safe(p.category)}</div>
+   <div class="price">${p.price?"₹"+safe(p.price):"रेट के लिए संपर्क करें"}</div>
+   <a class="order" target="_blank"
+    href="https://wa.me/918384868968?text=${encodeURIComponent("मुझे "+p.name+" चाहिए।")}">
+    WhatsApp Order
+   </a>
+  </div>
+ </div>`).join("");
+
+ document.getElementById("empty").textContent=
+  list.length?"":"अभी कोई प्रोडक्ट उपलब्ध नहीं है।";
+}
+
+document.getElementById("search").addEventListener("input",drawProducts);
+drawCategories();
+drawProducts();
+
+if(!firebaseConfig.apiKey.startsWith("PASTE_")){
+ const app=initializeApp(firebaseConfig);
+ const db=getFirestore(app);
+
+ onSnapshot(collection(db,"categories"),s=>{
+  categories=s.docs.map(d=>({id:d.id,...d.data()}));
+  drawCategories();
+ });
+
+ onSnapshot(collection(db,"products"),s=>{
+  products=s.docs.map(d=>d.data()).filter(p=>p.active!==false);
+  drawProducts();
+ });
+}
+</script>
 </body>
 </html>
